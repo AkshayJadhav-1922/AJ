@@ -1,6 +1,7 @@
 ﻿using AJStore.Data;
 using AJStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AJStore.Controllers
 {
@@ -26,6 +27,11 @@ namespace AJStore.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
+            //Custom Validations
+            //if(!obj.Name.IsNullOrEmpty() && !obj.DisplayOrder.ToString().IsNullOrEmpty() && obj.Name == obj.DisplayOrder.ToString())
+            //{
+            //    ModelState.AddModelError("name", "Name and Display order cannot be exactly same");
+            //}
             if(ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
