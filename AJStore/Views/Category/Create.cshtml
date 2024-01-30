@@ -7,8 +7,10 @@
             <hr />
         </div>
         <div class="mb-3 row p-1">
+            @*Spotted diff - asp-for tag is new in asp.net core *@
             <label asp-for=Name class="p-0"></label>
             <input asp-for=Name type="text" class="form-control" />
+            @*Spotted diff - aps-validation-for tag is new in asp.net core *@
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="mb-3 row p-1">

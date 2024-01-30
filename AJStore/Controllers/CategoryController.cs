@@ -6,6 +6,8 @@ namespace AJStore.Controllers
 {
     public class CategoryController : Controller
     {
+        //In tradition .net application, We had to create Object of ApplicationDb Context
+        //.net core provides object of db context as we have regitered it in Program.cs
         private readonly ApplicationDbContext _db;
         public CategoryController(ApplicationDbContext db)
         {
