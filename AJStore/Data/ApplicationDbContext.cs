@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AJStore.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AJStore.Data
 {
@@ -8,5 +9,7 @@ namespace AJStore.Data
         {
             
         }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }
