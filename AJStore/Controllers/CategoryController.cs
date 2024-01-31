@@ -41,5 +41,30 @@ namespace AJStore.Controllers
             return View();
             
         }
+
+        public IActionResult Edit(int? id)
+        {
+            if(id==null || id== 0)
+                return NotFound();
+            //Category category = _db.Categories.Find(id);  - Only works for primary key
+            //Category? category = _db.Categories.Where(c=> c.Id == id).FirstOrDefault();
+            Category? category = _db.Categories.FirstOrDefault(c => c.Id == id); //also work with other fields 
+            if(category==null)
+                return NotFound();
+            return View(category);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index", "Category");
+            }
+            return View();
+
+        }
     }
 }
