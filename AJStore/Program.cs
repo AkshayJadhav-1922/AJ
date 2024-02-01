@@ -1,3 +1,4 @@
+using Aj.DataAccess.Service;
 using AJ.DataAcess.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<ITransientService, TrnsientService>();
+builder.Services.AddScoped<IScopedService, ScopedService>();
+builder.Services.AddSingleton<ISingletoneService, SingletoneService>();
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
