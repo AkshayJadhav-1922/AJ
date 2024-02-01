@@ -1,7 +1,7 @@
-﻿using AJStore.Models;
+﻿using AJ.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AJStore.Data
+namespace AJ.DataAcess.Data
 {
     public class ApplicationDbContext : DbContext
     {

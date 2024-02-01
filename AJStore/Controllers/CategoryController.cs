@@ -1,5 +1,5 @@
-﻿using AJStore.Data;
-using AJStore.Models;
+﻿using AJ.DataAcess.Data;
+using AJ.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 

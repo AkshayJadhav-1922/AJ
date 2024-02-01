@@ -1,4 +1,4 @@
-using AJStore.Models;
+using AJ.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

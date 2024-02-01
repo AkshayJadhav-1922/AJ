@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace AJStore.Migrations
+namespace AJ.DataAcess.Migrations
 {
     /// <inheritdoc />
     public partial class AddCategoryTableToDb : Migration

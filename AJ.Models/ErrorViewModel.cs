@@ -1,4 +1,4 @@
-namespace AJStore.Models
+namespace AJ.Models
 {
     public class ErrorViewModel
     {

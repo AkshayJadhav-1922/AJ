@@ -1,4 +1,4 @@
-using AJStore.Data;
+using AJ.DataAcess.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
