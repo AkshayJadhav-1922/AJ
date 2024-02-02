@@ -1,4 +1,5 @@
-﻿using AJ.DataAcess.Data;
+﻿using Aj.DataAccess.Repository.IRepository;
+using AJ.DataAcess.Data;
 using AJ.Models;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,12 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aj.DataAccess.Repository.IRepository
+namespace Aj.DataAccess.Repository
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository  //remeber the format: we also have to inherit Repository<Category> which will give us all other definations
     {
         private ApplicationDbContext _db;
-        public CategoryRepository(ApplicationDbContext db): base(db)
+        public CategoryRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

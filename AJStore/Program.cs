@@ -1,3 +1,4 @@
+using Aj.DataAccess.Repository;
 using Aj.DataAccess.Repository.IRepository;
 using Aj.DataAccess.Service;
 using AJ.DataAcess.Data;

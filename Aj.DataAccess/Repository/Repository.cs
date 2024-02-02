@@ -8,7 +8,7 @@ using Aj.DataAccess.Repository.IRepository;
 using AJ.DataAcess.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aj.DataAccess.Repository.IRepository
+namespace Aj.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class  //Remember: Make class generic and observe inheritance
     {
@@ -18,7 +18,7 @@ namespace Aj.DataAccess.Repository.IRepository
         public Repository(ApplicationDbContext db)
         {
             _db = db;
-            this.dbSet = _db.Set<T>();
+            dbSet = _db.Set<T>();
         }
         public void Add(T entity)
         {
