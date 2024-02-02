@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aj.DataAccess.Repository.IRepository
 {
-    internal class Repository<T> : IRepository<T> where T : class  //Remember: Make class generic and observe inheritance
+    public class Repository<T> : IRepository<T> where T : class  //Remember: Make class generic and observe inheritance
     {
         private readonly ApplicationDbContext _db;
         internal DbSet<T> dbSet;

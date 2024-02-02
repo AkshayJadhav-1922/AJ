@@ -1,3 +1,4 @@
+using Aj.DataAccess.Repository.IRepository;
 using Aj.DataAccess.Service;
 using AJ.DataAcess.Data;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ITransientService, TrnsientService>();
 builder.Services.AddScoped<IScopedService, ScopedService>();
 builder.Services.AddSingleton<ISingletoneService, SingletoneService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
