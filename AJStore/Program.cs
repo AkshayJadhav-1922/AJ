@@ -12,6 +12,7 @@ builder.Services.AddTransient<ITransientService, TrnsientService>();
 builder.Services.AddScoped<IScopedService, ScopedService>();
 builder.Services.AddSingleton<ISingletoneService, SingletoneService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
