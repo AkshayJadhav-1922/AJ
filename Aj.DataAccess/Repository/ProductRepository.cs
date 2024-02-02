@@ -22,9 +22,9 @@ namespace Aj.DataAccess.Repository
             _db.SaveChanges();
         }
 
-        public void Update(Category category)
+        public void Update(Product product)
         {
-            _db.Update(category);
+            _db.Update(product);
         }
 
     }
