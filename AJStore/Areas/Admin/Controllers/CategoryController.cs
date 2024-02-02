@@ -4,8 +4,9 @@ using AJ.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AJStore.Controllers
+namespace AJStore.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         //In tradition .net application, We had to create Object of ApplicationDb Context
@@ -13,7 +14,7 @@ namespace AJStore.Controllers
         private readonly ICategoryRepository _category;
         public CategoryController(ICategoryRepository db)
         {
-            _category = db;   
+            _category = db;
         }
         public IActionResult Index()
         {
@@ -33,7 +34,7 @@ namespace AJStore.Controllers
             //{
             //    ModelState.AddModelError("name", "Name and Display order cannot be exactly same");
             //}
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _category.Add(obj);
                 TempData["success"] = "Category Created Successfully";
@@ -41,17 +42,17 @@ namespace AJStore.Controllers
                 return RedirectToAction("Index", "Category");
             }
             return View();
-            
+
         }
 
         public IActionResult Edit(int? id)
         {
-            if(id==null || id== 0)
+            if (id == null || id == 0)
                 return NotFound();
             //Category category = _db.Categories.Find(id);  - Only works for primary key
             //Category? category = _db.Categories.Where(c=> c.Id == id).FirstOrDefault();
             Category? category = _category.Get(c => c.Id == id); //also work with other fields 
-            if(category==null)
+            if (category == null)
                 return NotFound();
             return View(category);
         }
@@ -80,7 +81,7 @@ namespace AJStore.Controllers
             return View(category);
         }
 
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
             if (ModelState.IsValid)

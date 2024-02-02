@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text;
 
-namespace AJStore.Controllers
+namespace AJStore.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -30,7 +31,7 @@ namespace AJStore.Controllers
         {
             StringBuilder guid = new StringBuilder();
             //Every time when transient is called, it gives new implementation of that service 
-            guid.Append($"Transient1: { _transientService1.GetGuid()}\n");
+            guid.Append($"Transient1: {_transientService1.GetGuid()}\n");
             guid.Append($"Transient2: {_transientService1.GetGuid()}\n\n");
 
             //implementation stays same for one request irrespective of how many times service is called in that request 
