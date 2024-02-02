@@ -1,4 +1,5 @@
-﻿using AJ.DataAcess.Data;
+﻿using Aj.DataAccess.Repository.IRepository;
+using AJ.DataAcess.Data;
 using AJ.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -9,14 +10,14 @@ namespace AJStore.Controllers
     {
         //In tradition .net application, We had to create Object of ApplicationDb Context
         //.net core provides object of db context as we have regitered it in Program.cs
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly ICategoryRepository _category;
+        public CategoryController(ICategoryRepository db)
         {
-            _db = db;   
+            _category = db;   
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _db.Categories.ToList();
+            List<Category> objCategoryList = _category.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -34,9 +35,9 @@ namespace AJStore.Controllers
             //}
             if(ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
+                _category.Add(obj);
                 TempData["success"] = "Category Created Successfully";
-                _db.SaveChanges();
+                _category.Save();
                 return RedirectToAction("Index", "Category");
             }
             return View();
@@ -49,7 +50,7 @@ namespace AJStore.Controllers
                 return NotFound();
             //Category category = _db.Categories.Find(id);  - Only works for primary key
             //Category? category = _db.Categories.Where(c=> c.Id == id).FirstOrDefault();
-            Category? category = _db.Categories.FirstOrDefault(c => c.Id == id); //also work with other fields 
+            Category? category = _category.Get(c => c.Id == id); //also work with other fields 
             if(category==null)
                 return NotFound();
             return View(category);
@@ -60,8 +61,8 @@ namespace AJStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _category.Update(obj);
+                _category.Save();
                 TempData["success"] = "Category Updated Successfully";
                 return RedirectToAction("Index", "Category");
             }
@@ -73,7 +74,7 @@ namespace AJStore.Controllers
         {
             if (id == null || id == 0)
                 return NotFound();
-            Category? category = _db.Categories.FirstOrDefault(c => c.Id == id); //also work with other fields 
+            Category? category = _category.Get(c => c.Id == id); //also work with other fields 
             if (category == null)
                 return NotFound();
             return View(category);
@@ -86,11 +87,11 @@ namespace AJStore.Controllers
             {
                 if (id == null || id == 0)
                     return NotFound();
-                Category? category = _db.Categories.FirstOrDefault(c => c.Id == id); //also work with other fields 
+                Category? category = _category.Get(c => c.Id == id); //also work with other fields 
                 if (category == null)
                     return NotFound();
-                _db.Categories.Remove(category);
-                _db.SaveChanges();
+                _category.Remove(category);
+                _category.Save();
                 TempData["success"] = "Category Deleted Successfully";
                 return RedirectToAction("Index", "Category");
             }
