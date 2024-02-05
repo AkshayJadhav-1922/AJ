@@ -81,7 +81,7 @@ namespace AJStore.Areas.Admin.Controllers
                         file.CopyTo(fileStream);
                     }
 
-                    obj.Product.ImageUrl = @"images\product" + fileName;
+                    obj.Product.ImageUrl = @"\images\product\" + fileName;
                 }
                 _product.Add(obj.Product);
                 TempData["success"] = "Product Created Successfully";
