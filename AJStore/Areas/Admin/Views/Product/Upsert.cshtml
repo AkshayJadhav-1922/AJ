@@ -1,12 +1,12 @@
 ﻿@model ProductVM
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Edit Product</h2>
+            <h2 class="text-primary"> @(Model.Product.Id !=0 ? "Update": "Insert") Product</h2>
             <hr />
         </div>
-        <input asp-for="Product.Id" hidden />
+        <input asp-for="Product.Id" hidden /> 
         @*Spotted diff - 'asp-validation-summary' tag is new in asp.net core *@
         @* <div asp-validation-summary="All"></div> *@
         <div class="mb-3 row p-1">
@@ -60,12 +60,18 @@
         </div>
         <div class="mb-3 row p-1">
             <label asp-for=Product.ImageUrl class="p-0"></label>
-            <input asp-for=Product.ImageUrl type="text" class="form-control" />
-            <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
+            <input asp-for=Product.ImageUrl type="file" class="form-control" />
         </div>
         <div class="row">
             <div class="col-6 col-md-3">
-                <button type="submit" class="btn btn-primary form-control">Update</button>
+                @if(Model.Product.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary form-control">Create</button>
+                }
             </div>
             <div class="col-6 col-md-3">
                 <a asp-controller="Product" asp-action="Index" class="btn btn-secondary border form-control">Back to List</a>

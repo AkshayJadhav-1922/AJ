@@ -26,7 +26,7 @@ namespace AJStore.Areas.Admin.Controllers
             return View(objProductList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
 
             //Using View bag to pass categoryList to View
@@ -43,10 +43,21 @@ namespace AJStore.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productVM);
+            if(id==null || id == 0)
+            {
+                //create
+                return View(productVM);
+            }
+            else
+            {
+                //update
+                productVM.Product = _product.Get(u => u.Id == id);
+                return View(productVM);
+            }
+            
         }
         [HttpPost]
-        public IActionResult Create(ProductVM obj)
+        public IActionResult Upsert(ProductVM obj, IFormFile? file)
         {
             //Custom Validations
             //if(!obj.Name.IsNullOrEmpty() && !obj.DisplayOrder.ToString().IsNullOrEmpty() && obj.Name == obj.DisplayOrder.ToString())
@@ -71,48 +82,7 @@ namespace AJStore.Areas.Admin.Controllers
             }
         }
 
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-                return NotFound();
-
-            Product? product = _product.Get(c => c.Id == id); //also work with other fields 
-            if (product == null)
-                return NotFound();
-            ProductVM productVM = new()
-            {
-                CategoryList = _category.GetAll().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                }),
-                Product = product
-            };
-            return View(productVM);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(ProductVM obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _product.Update(obj.Product);
-                _product.Save();
-                TempData["success"] = "Product Updated Successfully";
-                return RedirectToAction("Index", "Product");
-            }
-            else
-            {
-                obj.CategoryList = _category.GetAll().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                });
-                return View(obj);
-            }
-
-        }
-
+        
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
