@@ -10,6 +10,7 @@
             <div class="col-9">
                 <div class="border p-3 mt-4">
                     <input asp-for="Product.Id" hidden />
+                    <input asp-for="Product.ImageUrl" hidden />
                     @*Spotted diff - 'asp-validation-summary' tag is new in asp.net core *@
                     @* <div asp-validation-summary="All"></div> *@
                     <div class="mb-3 row p-1">

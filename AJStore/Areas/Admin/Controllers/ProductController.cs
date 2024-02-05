@@ -76,6 +76,17 @@ namespace AJStore.Areas.Admin.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string produtPath = Path.Combine(wwwrootPath, @"images\product");
 
+                    if(!string.IsNullOrEmpty( obj.Product.ImageUrl))
+                    {
+                        //delete old img
+                        string oldFileName = _webHostEnvironment.WebRootPath + obj.Product.ImageUrl.TrimStart('\\');
+
+                        if(System.IO.File.Exists(oldFileName))
+                        {
+                            System.IO.File.Delete(oldFileName);
+                        }
+                    }
+
                     using(var fileStream = new FileStream(Path.Combine(produtPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
@@ -83,8 +94,17 @@ namespace AJStore.Areas.Admin.Controllers
 
                     obj.Product.ImageUrl = @"\images\product\" + fileName;
                 }
-                _product.Add(obj.Product);
-                TempData["success"] = "Product Created Successfully";
+                if(obj.Product.Id == 0) {
+                    _product.Add(obj.Product);
+                    TempData["success"] = "Product Created Successfully";
+                }
+                else
+                {
+                    _product.Update(obj.Product);
+                    TempData["success"] = "Product Updated Successfully";
+
+                }
+                
                 _product.Save();
                 return RedirectToAction("Index", "Product");
             }
