@@ -15,10 +15,14 @@ namespace AJStore.Areas.Admin.Controllers
         //.net core provides object of db context as we have regitered it in Program.cs
         private readonly IProductRepository _product;
         private readonly ICategoryRepository _category;
-        public ProductController(IProductRepository db, ICategoryRepository ct)
+
+        //IWebHostEnvironment is used to access wwwroot folder
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IProductRepository db, ICategoryRepository ct, IWebHostEnvironment webHostEnvironment)
         {
             _product = db;
             _category = ct;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -66,6 +70,19 @@ namespace AJStore.Areas.Admin.Controllers
             //}
             if (ModelState.IsValid)
             {
+                string wwwrootPath = _webHostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string produtPath = Path.Combine(wwwrootPath, @"images\product");
+
+                    using(var fileStream = new FileStream(Path.Combine(produtPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    obj.Product.ImageUrl = @"images\product" + fileName;
+                }
                 _product.Add(obj.Product);
                 TempData["success"] = "Product Created Successfully";
                 _product.Save();
