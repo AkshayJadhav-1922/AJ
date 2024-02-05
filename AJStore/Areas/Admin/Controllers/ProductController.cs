@@ -2,6 +2,7 @@
 using AJ.DataAcess.Data;
 using AJ.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AJStore.Areas.Admin.Controllers
@@ -12,9 +13,11 @@ namespace AJStore.Areas.Admin.Controllers
         //In tradition .net application, We had to create Object of ApplicationDb Context
         //.net core provides object of db context as we have regitered it in Program.cs
         private readonly IProductRepository _product;
-        public ProductController(IProductRepository db)
+        private readonly ICategoryRepository _category;
+        public ProductController(IProductRepository db, ICategoryRepository ct)
         {
             _product = db;
+            _category = ct;
         }
         public IActionResult Index()
         {
@@ -24,6 +27,14 @@ namespace AJStore.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
+
+            //Using View bag to pass categoryList to View
+            ViewBag.CategoryList = CategoryList;
             return View();
         }
         [HttpPost]
