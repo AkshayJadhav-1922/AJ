@@ -26,7 +26,7 @@ namespace AJStore.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Product> objProductList = _product.GetAll().ToList();
+            List<Product> objProductList = _product.GetAll(includeProperties: "Category").ToList();
             return View(objProductList);
         }
 

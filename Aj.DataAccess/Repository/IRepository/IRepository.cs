@@ -9,8 +9,8 @@ namespace Aj.DataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class  //Remeber: <T> where T : class - written to make interface generic. 
     {
-        IEnumerable<T> GetAll();
-        T Get(Expression<Func<T,bool>>filter); //Remeber: Expression<Func<T,bool>>filter which is written to accept arrow function
+        IEnumerable<T> GetAll(string? includeProperties = null);
+        T Get(Expression<Func<T,bool>>filter, string? includeProperties = null); //Remeber: Expression<Func<T,bool>>filter which is written to accept arrow function
         void Add(T entity);
         void Remove(T entity);
         void RemoveRaneg(IEnumerable<T> entities);
