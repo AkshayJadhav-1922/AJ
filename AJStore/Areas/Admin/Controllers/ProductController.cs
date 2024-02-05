@@ -79,20 +79,37 @@ namespace AJStore.Areas.Admin.Controllers
             Product? product = _product.Get(c => c.Id == id); //also work with other fields 
             if (product == null)
                 return NotFound();
-            return View(product);
+            ProductVM productVM = new()
+            {
+                CategoryList = _category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = product
+            };
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Edit(Product obj)
+        public IActionResult Edit(ProductVM obj)
         {
             if (ModelState.IsValid)
             {
-                _product.Update(obj);
+                _product.Update(obj.Product);
                 _product.Save();
                 TempData["success"] = "Product Updated Successfully";
                 return RedirectToAction("Index", "Product");
             }
-            return View();
+            else
+            {
+                obj.CategoryList = _category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(obj);
+            }
 
         }
 
