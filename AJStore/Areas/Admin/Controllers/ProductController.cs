@@ -1,6 +1,7 @@
 ﻿using Aj.DataAccess.Repository.IRepository;
 using AJ.DataAcess.Data;
 using AJ.Models;
+using AJ.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
@@ -27,20 +28,25 @@ namespace AJStore.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            IEnumerable<SelectListItem> CategoryList = _category.GetAll().Select(u => new SelectListItem
-            {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
 
             //Using View bag to pass categoryList to View
             //ViewBag.CategoryList = CategoryList;
             //Using ViewData
-            ViewData["CategoryList"] = CategoryList;
-            return View();
+            //ViewData["CategoryList"] = CategoryList;
+
+            ProductVM productVM = new()
+            {
+                CategoryList = _category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
         }
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Create(ProductVM obj)
         {
             //Custom Validations
             //if(!obj.Name.IsNullOrEmpty() && !obj.DisplayOrder.ToString().IsNullOrEmpty() && obj.Name == obj.DisplayOrder.ToString())
@@ -49,13 +55,20 @@ namespace AJStore.Areas.Admin.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _product.Add(obj);
+                _product.Add(obj.Product);
                 TempData["success"] = "Product Created Successfully";
                 _product.Save();
                 return RedirectToAction("Index", "Product");
             }
-            return View();
-
+            else
+            {
+                obj.CategoryList = _category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(obj);
+            }
         }
 
         public IActionResult Edit(int? id)
