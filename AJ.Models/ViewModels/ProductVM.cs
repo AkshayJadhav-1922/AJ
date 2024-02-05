@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace AJ.Models.ViewModels
 {
+    //ViewModel are models which are specifically designed for views 
+    //Advantage: Views will be strongly typed to one model. Because of that viewModel is also known as 'Strongly Typed Views'
     public class ProductVM
     {
         public Product Product { get; set; }
