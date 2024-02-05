@@ -34,7 +34,9 @@ namespace AJStore.Areas.Admin.Controllers
             });
 
             //Using View bag to pass categoryList to View
-            ViewBag.CategoryList = CategoryList;
+            //ViewBag.CategoryList = CategoryList;
+            //Using ViewData
+            ViewData["CategoryList"] = CategoryList;
             return View();
         }
         [HttpPost]
