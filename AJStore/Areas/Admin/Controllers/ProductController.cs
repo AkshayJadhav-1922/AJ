@@ -79,7 +79,7 @@ namespace AJStore.Areas.Admin.Controllers
                     if(!string.IsNullOrEmpty( obj.Product.ImageUrl))
                     {
                         //delete old img
-                        string oldFileName = _webHostEnvironment.WebRootPath + obj.Product.ImageUrl.TrimStart('\\');
+                        string oldFileName = _webHostEnvironment.WebRootPath + obj.Product.ImageUrl;
 
                         if(System.IO.File.Exists(oldFileName))
                         {
@@ -119,34 +119,36 @@ namespace AJStore.Areas.Admin.Controllers
             }
         }
 
-        
-        public IActionResult Delete(int? id)
+
+        [HttpGet]
+        public IActionResult Getproducts()
         {
-            if (id == null || id == 0)
-                return NotFound();
-            Product? product = _product.Get(c => c.Id == id); //also work with other fields 
-            if (product == null)
-                return NotFound();
-            return View(product);
+            List<Product> objProductList = _product.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = objProductList });
         }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePost(int? id)
+        [HttpDelete]
+        public IActionResult Delete(int? id)
         {
-            if (ModelState.IsValid)
+            Product productToBeDeleted = _product.Get(u=>u.Id==id);
+            if(productToBeDeleted == null)
             {
-                if (id == null || id == 0)
-                    return NotFound();
-                Product? product = _product.Get(c => c.Id == id); //also work with other fields 
-                if (product == null)
-                    return NotFound();
-                _product.Remove(product);
-                _product.Save();
-                TempData["success"] = "Product Deleted Successfully";
-                return RedirectToAction("Index", "Product");
+                return Json(new {success =  false, message ="Error while deleting"});                
             }
-            return View();
+            if (!string.IsNullOrEmpty(productToBeDeleted.ImageUrl))
+            {
+                //delete old img
+                string oldFileName = _webHostEnvironment.WebRootPath + productToBeDeleted.ImageUrl;
 
+                if (System.IO.File.Exists(oldFileName))
+                {
+                    System.IO.File.Delete(oldFileName);
+                }
+            }
+
+            _product.Remove(productToBeDeleted); _product.Save();
+            return Json(new { success = false, message = "Category Deleted Successfully" } );
         }
     }
 }
+
