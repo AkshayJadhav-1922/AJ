@@ -14,6 +14,7 @@ namespace AJ.DataAcess.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //have to add because keys of identity are mapped in OnModelCreating
