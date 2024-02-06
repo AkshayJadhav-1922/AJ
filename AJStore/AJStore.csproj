@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Aj.DataAccess\Aj.DataAccess.csproj" />
     <ProjectReference Include="..\AJ.Models\AJ.Models.csproj" />
+    <ProjectReference Include="..\AJ.Utilities\AJ.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
