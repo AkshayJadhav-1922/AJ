@@ -1,12 +1,15 @@
 ﻿using Aj.DataAccess.Repository.IRepository;
 using AJ.DataAcess.Data;
 using AJ.Models;
+using AJ.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AJStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         //In tradition .net application, We had to create Object of ApplicationDb Context

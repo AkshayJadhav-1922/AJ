@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-primary border-bottom box-shadow mb-3">
+        <nav class="navbar bg-gradient navbar-expand-sm navbar-toggleable-sm bg-primary border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">AJ'S_Store</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,9 +28,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if(User.IsInRole(SD.Role_Admin))
+                        {
                         <li class="nav-item dropdown">
                             <a class="nav-link text-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
+                                Manage Content
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
@@ -42,6 +44,7 @@
                                 </li>
                             </ul>
                         </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -55,8 +58,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer bg-primary">
-        <div class="text-center">
+    <footer class="border-top footer bg-primary bg-gradient">
+        <div class="text-center text-light">
             Made with <i class="bi bi-heart-fill"></i> by Akshay
         </div>
     </footer>
